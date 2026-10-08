@@ -1,0 +1,12 @@
+[
+  {
+    "tytul": "Przykładowa promocja – Pralka XYZ",
+    "opis": "Opis promocji dnia.",
+    "cena": "1999 zł",
+    "cena_stara": "2499 zł",
+    "zdjecie": "images/promocje/przyklad.jpg",
+    "zdjecie_duze": "images/promocje/przyklad.jpg",
+    "producent": "Przykład",
+    "aktualizacja": "2025-01-01"
+  }
+]

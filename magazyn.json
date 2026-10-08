@@ -1,0 +1,9 @@
+[
+  {
+    "tytul": "Przykładowy produkt z magazynu",
+    "status": "Dostępny",
+    "cena": "Cena na zapytanie",
+    "kategoria": "lodowki",
+    "zdjecie": "images/magazyn/fridge1.jpg"
+  }
+]

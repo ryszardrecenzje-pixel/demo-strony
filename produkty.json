@@ -1,0 +1,16 @@
+{
+  "lodowki.html": [
+    {
+      "tytul": "Przykładowa lodówka Model X",
+      "opis": "Opis produktu. Zastąp swoimi danymi.",
+      "cena": "Cena na zapytanie",
+      "zdjecia": [
+        "images/produkty/przyklad.jpg"
+      ]
+    }
+  ],
+  "pralki.html": [],
+  "zmywarki.html": [],
+  "piekarniki.html": [],
+  "male_agd.html": []
+}

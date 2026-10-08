@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NAZWA_FIRMY - Lodówki</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+        body {
+            background-color: #f4f4f4;
+            color: #333;
+            line-height: 1.6;
+        }
+        /* Górny pasek z interaktywnymi elementami */
+        .top-bar {
+            background-color: #1a4b84;
+            color: #fff;
+            padding: 0.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9rem;
+        }
+        .top-bar a {
+            color: #fff;
+            text-decoration: none;
+            transition: opacity 0.3s;
+        }
+        .top-bar a:hover {
+            opacity: 0.8;
+            text-decoration: underline;
+        }
+        .social-icons {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        .social-icons a {
+            background: rgba(255,255,255,0.2);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 0.85rem;
+        }
+
+        /* Główny nagłówek z logo i menu */
+        header {
+            background-color: #fff;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #ddd;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .logo-img {
+            max-height: 50px;
+            display: block;
+        }
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 1.8rem;
+            align-items: center;
+        }
+        nav ul li a {
+            color: #1a4b84;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+        }
+        nav ul li a:hover {
+            color: #ff6600;
+        }
+        .btn-zglos {
+            background-color: #d9534f;
+            color: #fff !important;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+        }
+
+        /* Sekcja główna podstrony */
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+        .page-title {
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+            color: #1a4b84;
+            border-bottom: 2px solid #1a4b84;
+            padding-bottom: 0.5rem;
+        }
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+        .product-card {
+            background: #fff;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .product-card-image {
+            width: 100%;
+            height: 180px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            border-radius: 4px;
+            background: #f9f9f9;
+        }
+        .product-card-image img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+        .product-card h3 {
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+            color: #1a4b84;
+        }
+        .product-card p {
+            color: #666;
+            margin-bottom: 1rem;
+        }
+        .btn {
+            display: inline-block;
+            background-color: #1a4b84;
+            color: #fff;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            text-decoration: none;
+            transition: background 0.3s;
+        }
+        .btn:hover {
+            background-color: #13355f;
+        }
+
+        /* Stopka */
+        footer {
+            background-color: #1a4b84;
+            color: #fff;
+            text-align: center;
+            padding: 1.5rem;
+            margin-top: 3rem;
+        }
+    
+        /* Lightbox */
+        .lightbox {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            left: 0; top: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.9);
+            align-items: center;
+            justify-content: center;
+            cursor: zoom-out;
+        }
+        .lightbox.active { display: flex; }
+        .lightbox img {
+            max-width: 95%;
+            max-height: 95%;
+            object-fit: contain;
+            border-radius: 4px;
+            box-shadow: 0 4px 30px rgba(0,0,0,0.5);
+        }
+        .lightbox-close {
+            position: absolute;
+            top: 20px; right: 30px;
+            color: #fff;
+            font-size: 2.5rem;
+            font-weight: bold;
+            cursor: pointer;
+            line-height: 1;
+        }
+        .product-card-image img {
+            cursor: zoom-in;
+            transition: opacity 0.2s;
+        }
+        .product-card-image img:hover { opacity: 0.85; }
+
+    
+        .btn-add-cart {
+            display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+            width: 100%; margin-top: 0.75rem; padding: 0.65rem 1rem; border: none; border-radius: 6px;
+            background: #0ea5e9; color: #fff; font-weight: 600; font-size: 0.95rem;
+            cursor: pointer; transition: background .15s, transform .1s;
+        }
+        .btn-add-cart:hover { background: #0284c7; }
+        .btn-add-cart.added { background: #16a34a; }
+        .cart-badge {
+            display: none; min-width: 18px; height: 18px; padding: 0 5px;
+            background: #e11d48; color: #fff; border-radius: 999px;
+            font-size: 0.72rem; font-weight: 700; line-height: 18px; text-align: center;
+        }
+        .cart-link { display: inline-flex; align-items: center; gap: 6px; }
+
+    </style>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- Górny pasek – interaktywny adres, telefon i social media -->
+    <div class="top-bar">
+        <div>
+            Tu jesteśmy: 
+            <a href="https://maps.google.com/?q=Al.+1+Maja+15+MIASTO" target="_blank">ADRES_ULICA, KOD_POCZTOWY MIASTO</a> 
+            &nbsp;&nbsp;|&nbsp;&nbsp; 
+            📞 <a href="tel:TELEFON_1">TELEFON_1</a>
+        </div>
+        <div class="social-icons">
+            Odwiedź nas: 
+            <a href="https://www.facebook.com/TWOJA_STRONA_FB" target="_blank">F</a> 
+            <a href="https://www.instagram.com/TWOJ_INSTAGRAM/" target="_blank">IG</a>
+        </div>
+    </div>
+
+    <!-- Nagłówek z poprawioną ścieżką do logo z folderu images -->
+    <header>
+        <a href="index.html">
+            <img src="images/logo.png" alt="NAZWA_FIRMY Logo" class="logo-img">
+        </a>
+        <nav>
+            <ul>
+                <li><a href="index.html">STRONA GŁÓWNA</a></li>
+                <li><a href="sprzedaz.html">SPRZEDAŻ AGD</a></li>
+                <li><a href="index.html#serwis">SERWIS I NAPRAWA</a></li>
+                <li><a href="#">PORADY</a></li>
+                <li><a href="index.html#kontakt">KONTAKT</a></li>
+                <li><a href="index.html#serwis" class="btn-zglos">ZGŁOŚ NAPRAWĘ</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Zawartość podstrony -->
+    <div class="container">
+        <h2 class="page-title">Zmywarki</h2>
+
+        <div class="category-search">
+            <input type="text" id="catSearchInput" placeholder="Szukaj produktu w tej kategorii..." oninput="filterCatProducts()" autocomplete="off">
+            <button onclick="filterCatProducts()"><i class="fa-solid fa-magnifying-glass"></i></button>
+        </div>
+        <div id="noResults" class="no-results">Brak pasujących produktów</div>
+ <!-- Zmień ten nagłówek w innych plikach kategorii (np. Pralki, Zamrażarki) -->
+        
+        <div class="products-grid">
+            <!-- POCZATEK_PRODUKTOW -->
+
+            <div class="product-card" data-title="do zabudowy beko bdin38543p" data-keywords="do zabudowy beko bdin38543p produkt do zabudowy beko bdin38543p dostępny w salonie NAZWA_FIRMY. zapraszamy do kontaktu po szczegóły i aktualną cenę.">
+
+                <div class="product-card-image">
+                    <img src="images/zdjęcia produktów/zmywarki/DO ZABUDOWY BEKO BDIN38543P.jpg" alt="DO ZABUDOWY BEKO BDIN38543P" onclick="openLightbox(this.src)" onerror="this.style.display='none'">
+                </div>
+                <div class="availability"><span class="availability-dot dot-local"></span> Dostępny lokalnie</div>
+                <h3>DO ZABUDOWY BEKO BDIN38543P</h3>
+                <p class="opis">Produkt DO ZABUDOWY BEKO BDIN38543P dostępny w salonie NAZWA_FIRMY. Zapraszamy do kontaktu po szczegóły i aktualną cenę.</p>
+                <span class="cena">Cena na zapytanie</span>
+            </div>
+
+            <div class="product-card" data-title="electrolux esa421105w" data-keywords="electrolux esa421105w produkt electrolux esa421105w dostępny w salonie NAZWA_FIRMY. zapraszamy do kontaktu po szczegóły i aktualną cenę.">
+
+                <div class="product-card-image">
+                    <img src="images/zdjęcia produktów/zmywarki/Electrolux ESA421105W.jpg" alt="Electrolux ESA421105W" onclick="openLightbox(this.src)" onerror="this.style.display='none'">
+                </div>
+                <div class="availability"><span class="availability-dot dot-local"></span> Dostępny lokalnie</div>
+                <h3>Electrolux ESA421105W</h3>
+                <p class="opis">Produkt Electrolux ESA421105W dostępny w salonie NAZWA_FIRMY. Zapraszamy do kontaktu po szczegóły i aktualną cenę.</p>
+                <span class="cena">Cena na zapytanie</span>
+            </div>
+
+            <div class="product-card" data-title="samsung dw50dg450fsr" data-keywords="samsung dw50dg450fsr produkt samsung dw50dg450fsr dostępny w salonie NAZWA_FIRMY. zapraszamy do kontaktu po szczegóły i aktualną cenę.">
+
+                <div class="product-card-image">
+                    <img src="images/zdjęcia produktów/zmywarki/SAMSUNG DW50DG450FSR.jpg" alt="SAMSUNG DW50DG450FSR" onclick="openLightbox(this.src)" onerror="this.style.display='none'">
+                </div>
+                <div class="availability"><span class="availability-dot dot-local"></span> Dostępny lokalnie</div>
+                <h3>SAMSUNG DW50DG450FSR</h3>
+                <p class="opis">Produkt SAMSUNG DW50DG450FSR dostępny w salonie NAZWA_FIRMY. Zapraszamy do kontaktu po szczegóły i aktualną cenę.</p>
+                <span class="cena">Cena na zapytanie</span>
+            </div>
+
+            <div class="product-card" data-title="zmywarka electrolux" data-keywords="zmywarka electrolux produkt zmywarka electrolux dostępny w salonie NAZWA_FIRMY. zapraszamy do kontaktu po szczegóły i aktualną cenę.">
+
+                <div class="product-card-image">
+                    <img src="images/zdjęcia produktów/zmywarki/Zmywarka Electrolux.jpg" alt="Zmywarka Electrolux" onclick="openLightbox(this.src)" onerror="this.style.display='none'">
+                </div>
+                <div class="availability"><span class="availability-dot dot-local"></span> Dostępny lokalnie</div>
+                <h3>Zmywarka Electrolux</h3>
+                <p class="opis">Produkt Zmywarka Electrolux dostępny w salonie NAZWA_FIRMY. Zapraszamy do kontaktu po szczegóły i aktualną cenę.</p>
+                <span class="cena">Cena na zapytanie</span>
+            </div>
+
+<!-- KONIEC_PRODUKTOW -->
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 NAZWA_FIRMY – Sprzedaż i Serwis AGD. Wszelkie prawa zastrzeżone.</p>
+    </footer>
+
+
+    <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+        <span class="lightbox-close">&times;</span>
+        <img id="lightbox-img" src="" alt="Powiększone zdjęcie">
+    </div>
+    <script>
+        function openLightbox(src) {
+            document.getElementById('lightbox-img').src = src;
+            document.getElementById('lightbox').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeLightbox();
+        });
+    </script>
+
+
+    <script>
+        function filterCatProducts() {
+            const input = document.getElementById('catSearchInput');
+            if (!input) return;
+            const val = input.value.toLowerCase().trim();
+            const cards = document.querySelectorAll('.product-card');
+            let visible = 0;
+            cards.forEach(card => {
+                const title = (card.getAttribute('data-title') || (card.querySelector('h3') ? card.querySelector('h3').innerText : '') || '').toLowerCase();
+                const keywords = (card.getAttribute('data-keywords') || '').toLowerCase();
+                const text = title + ' ' + keywords;
+                if (!val || text.includes(val)) {
+                    card.style.display = '';
+                    visible++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+            const noRes = document.getElementById('noResults');
+            if (noRes) noRes.style.display = (visible === 0 && val) ? 'block' : 'none';
+        }
+    </script>
+
+    <script src="cart.js"></script>
+</body>
+</html>
